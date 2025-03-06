@@ -1,7 +1,6 @@
 .container {
     min-height: 200px;
 }
-
 .content {
     display: flex;
     flex-direction: column;
@@ -9,4 +8,8 @@
     align-items: start;
     justify-content: start;
     gap: 20px;
+}
+label {
+    display: flex;
+    align-items: center;
 }

@@ -2,11 +2,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { AppDispatch } from "../../../store/store";
 import { useState } from "react";
-import style from '../EditPage/EditPage.module.scss'
+import style from './CreatePage.module.scss'
 import { EMPLOYEE_ROLE, IEmployee } from "../../../assets/interfaces/IEmployee";
 import Select from "../../UI/Select/Select";
 import { formatDate, formatPhoneNumber, removeNonNumeric } from "../../../assets/utils/validators";
 import { createEmployee } from "../../../slices/employeeSlices";
+import TextBox from "../../UI/Input/TextBox";
 
 interface IProps {
   roles: EMPLOYEE_ROLE[]
@@ -50,9 +51,22 @@ const CreatePage = (props: IProps) => {
     <div className={style.container}>
       <div>Создать карточку сотрудника</div>
       <div className={style.content}>
-        <div>Имя <input type="text" value={name} onChange={(e) => setName(e.target.value)} /></div>
-        <div>Телефон <input type="tel" value={phone} onChange={(e) => setPhone(formatPhoneNumber(e.target.value))} /></div>
-        <div>Д.рождения <input type="text" value={birthday} onChange={(e) => setBirthday(formatDate(e.target.value))} /></div>
+        <div>Имя <TextBox
+          type="text"
+          value={name} onChange={(e) => setName(e.target.value)}
+          error={!validators.name}
+          errorText='Имя должно содержать не менее 4 букв' />
+        </div>
+        <div>Телефон <TextBox
+          type="tel"
+          value={phone} onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
+          error={!validators.phone}
+          errorText='Введите корректный номер телефона' /></div>
+        <div>День рождения <TextBox
+          type="text"
+          value={birthday} onChange={(e) => setBirthday(formatDate(e.target.value))}
+          error={!validators.birthday}
+          errorText="Введите полную дату рождения" /></div>
         <div>Роль <Select
           value={role}
           options={props.roles.map((el) => ({ label: el, value: el }))}
